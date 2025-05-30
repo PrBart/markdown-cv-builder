@@ -3,7 +3,7 @@ name: Deploy on commit to GitHub Pages
 on:
   push:
     branches:
-      - master
+      - main
 
 # Add permissions for the workflow
 permissions:
@@ -19,6 +19,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: github-pages
     steps:
       - name: Checkout source repo
         uses: actions/checkout@v4
