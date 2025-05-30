@@ -15,8 +15,13 @@ on:
       title:
         description: "Set the page title"
         required: true
-
         type: string
+
+# Add permissions for the workflow
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   deploy:

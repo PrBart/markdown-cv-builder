@@ -5,6 +5,12 @@ on:
     branches:
       - master
 
+# Add permissions for the workflow
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
