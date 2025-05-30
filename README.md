@@ -1,6 +1,6 @@
 # Markdown CV Builder
 
-A modern, customizable CV/Resume builder that converts Markdown to a beautiful web page and PDF. Perfect for developers and tech professionals who want to maintain their CV in a version-controlled format.
+A modern, customizable CV/Resume builder that converts Markdown to a beautiful web page and PDF. Perfect for developers and tech professionals who want to maintain and host their CV on gh-pages.
 
 **🔗 [View Live Demo](https://prbart.github.io/markdown-cv-builder/)**
 
