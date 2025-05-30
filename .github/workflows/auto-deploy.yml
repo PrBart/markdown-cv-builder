@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy on commit to GitHub Pages
 
 on:
   push:
@@ -51,8 +51,13 @@ jobs:
         run: npm ci
 
       - name: Build
+        env:
+          VITE_BASE_URL: /${{ github.event.repository.name }}/
+          VITE_CV_THEME: ${{ env.VITE_CV_THEME }}
+          VITE_PAGE_TITLE: ${{ env.VITE_PAGE_TITLE }}
         run: |
-          echo "Building with theme: $VITE_CV_THEME"
+          echo "Building with base URL: $VITE_BASE_URL"
+          echo "Using theme: $VITE_CV_THEME"
           echo "Using page title: $VITE_PAGE_TITLE"
           npm run build
           cp dist/index.html dist/404.html

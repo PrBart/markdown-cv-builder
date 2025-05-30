@@ -38,12 +38,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
+      - name: Build project
         env:
+          VITE_BASE_URL: /${{ github.event.repository.name }}/
           VITE_CV_THEME: ${{ github.event.inputs.theme }}
           VITE_PAGE_TITLE: ${{ github.event.inputs.title }}
         run: |
-          echo "Building with theme: $VITE_CV_THEME"
+          echo "Building with base URL: $VITE_BASE_URL"
+          echo "Using theme: $VITE_CV_THEME"
           echo "Using page title: $VITE_PAGE_TITLE"
           npm run build
           cp dist/index.html dist/404.html
