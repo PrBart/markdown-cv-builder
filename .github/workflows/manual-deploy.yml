@@ -19,22 +19,29 @@ on:
 
 # Add permissions for the workflow
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
 
+jobs:
+  build:
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout source repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 24
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Install dependencies
         run: npm ci
@@ -49,11 +56,18 @@ jobs:
           npm run build
           cp dist/index.html dist/404.html
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_branch: gh-pages
-          publish_dir: ./dist
-          user_name: github-actions[bot]
-          user_email: github-actions[bot]@users.noreply.github.com
+          path: ./dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
