@@ -3,7 +3,7 @@ name: Deploy on commit to GitHub Pages
 on:
   push:
     branches:
-      - main
+      - master
 
 # Add permissions for the workflow
 permissions:
