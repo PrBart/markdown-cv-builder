@@ -52,11 +52,12 @@ jobs:
 
       - name: Build
         env:
-          VITE_BASE_URL: /${{ github.event.repository.name }}/
+          NODE_ENV: production
+          GITHUB_REPOSITORY: ${{ github.repository }}
           VITE_CV_THEME: ${{ env.VITE_CV_THEME }}
           VITE_PAGE_TITLE: ${{ env.VITE_PAGE_TITLE }}
         run: |
-          echo "Building with base URL: $VITE_BASE_URL"
+          echo "Building for repository: $GITHUB_REPOSITORY"
           echo "Using theme: $VITE_CV_THEME"
           echo "Using page title: $VITE_PAGE_TITLE"
           npm run build
