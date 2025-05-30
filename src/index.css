@@ -85,10 +85,3 @@ body {
 .print-only {
   display: none;
 }
-
-@media (max-width: 480px) {
-  .page-container {
-    min-width: 100%;
-    padding: 1rem;
-  }
-}
