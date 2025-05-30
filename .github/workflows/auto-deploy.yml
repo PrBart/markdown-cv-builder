@@ -1,0 +1,56 @@
+name: Deploy on commit to GitHub Pages
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
+
+      - name: Load and export environment variables from .env
+        run: |
+          echo "Loading .env"
+          if [ -f .env ]; then
+            while IFS='=' read -r key value; do
+              if [[ "$key" =~ ^[A-Za-z_][A-Za-z0-9_]*$ ]]; then
+                echo "$key=$value" >> $GITHUB_ENV
+              fi
+            done < .env
+          fi
+
+      - name: Print vars
+        run: |
+          echo "Using theme: $VITE_CV_THEME"
+          echo "Page title: $VITE_PAGE_TITLE"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build with selected theme
+        run: |
+          echo "Building with theme: $VITE_CV_THEME"
+          echo "Using page title: $VITE_PAGE_TITLE"
+          npm run build
+
+      - name: Copy 404 fallback
+        run: cp dist/index.html dist/404.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com

@@ -1,0 +1,19 @@
+.markdown-page {
+  padding: 2rem;
+  width: 100%;
+}
+
+.language-selector {
+  width: 140px;
+  height: 115px;
+  margin-bottom: 5px;
+}
+
+.print-button-container {
+  display: flex;
+  margin-top: 10px;
+}
+
+.print-button {
+  padding: 10px 5px;
+}

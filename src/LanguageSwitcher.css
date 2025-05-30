@@ -1,0 +1,35 @@
+.dropdown-container {
+  @media (width <= 560px) {
+    position: relative;
+    margin-bottom: 5px;
+  }
+}
+
+.fancy-dropdown {
+  font-size: 16px;
+  color: black;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 0.6em 2.5em 0.6em 1em;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: white;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg width='12' height='7' viewBox='0 0 12 7' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 7L0.803848 0.25L11.1962 0.25L6 7Z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75em center;
+  background-size: 1em;
+  transition: border 0.2s, box-shadow 0.2s;
+  width: 100%;
+}
+
+.fancy-dropdown:hover {
+  border-color: #888;
+}
+
+.fancy-dropdown:focus {
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+  outline: none;
+}

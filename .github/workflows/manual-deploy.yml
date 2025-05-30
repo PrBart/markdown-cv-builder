@@ -1,0 +1,54 @@
+name: Manual deploy to GitHub Pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      theme:
+        description: "Select a theme (github, retro, screen)"
+        required: true
+        default: "github"
+        type: choice
+        options:
+          - github
+          - retro
+          - screen
+      title:
+        description: "Set the page title"
+        required: true
+
+        type: string
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build project
+        env:
+          VITE_CV_THEME: ${{ github.event.inputs.theme }}
+          VITE_PAGE_TITLE: ${{ github.event.inputs.title }}
+        run: |
+          echo "Building with theme: $VITE_CV_THEME"
+          echo "Using page title: $VITE_PAGE_TITLE"
+          npm run build
+          cp dist/index.html dist/404.html
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: ./dist
+          user_name: github-actions[bot]
+          user_email: github-actions[bot]@users.noreply.github.com
