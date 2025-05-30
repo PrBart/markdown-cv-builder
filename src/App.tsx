@@ -2,13 +2,15 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MarkdownPage from "./MarkdownPage";
 
 function App() {
+  const baseUrl = import.meta.env.BASE_URL;
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={baseUrl}>
       <Routes>
-        {/* Default English version at root */}
+        {/* Default version at root */}
         <Route index path="/" element={<MarkdownPage isDefaultLang />} />
 
-        {/* Other languages like /fr */}
+        {/* Other languages like /fr or /es */}
         <Route path="/:lang" element={<MarkdownPage />} />
       </Routes>
     </BrowserRouter>
