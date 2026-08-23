@@ -1,3 +1,17 @@
+---
+$schema: ../config/cv.frontmatter.schema.json
+lang: en
+label: English
+default: true
+title: John Doe — CV
+description: Senior Software Engineer with 8+ years of experience in full-stack development, cloud architecture, and team leadership.
+printLabel: Print / Save PDF
+theme: github
+favicon: favicon.svg
+ogImage: assets/og-preview.svg
+siteUrl: https://prbart.github.io/markdown-cv-builder
+---
+
 # John Doe
 ## Senior Software Engineer
 

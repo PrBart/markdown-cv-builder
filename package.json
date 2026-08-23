@@ -10,12 +10,17 @@
   "homepage": "https://github.com/PrBart/markdown-cv-builder",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "build:github": "VITE_CV_THEME=github vite build",
-    "build:retro": "VITE_CV_THEME=retro vite build",
-    "build:screen": "VITE_CV_THEME=screen vite build",
+    "validate": "tsx src/scripts/validate-cv.ts",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:watch": "vitest",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "typecheck": "tsc -b",
+    "check": "npm run validate && npm run typecheck && npm run lint && npm run test",
+    "build": "SKIP_VITE_BUILD=1 npm run check && vite build",
+    "preview": "vite preview",
+    "schema:generate": "tsx src/scripts/generate-frontmatter-schema.ts",
+    "schema:check": "npm run schema:generate && git diff --exit-code -- config/cv.frontmatter.schema.json"
   },
   "dependencies": {
     "github-markdown-css": "^5.8.1",
@@ -23,19 +28,29 @@
     "react-dom": "^19.1.0",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.5.3",
-    "remark-gfm": "^4.0.1"
+    "remark-gfm": "^4.0.1",
+    "yaml": "^2.9.0",
+    "zod": "^4.4.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.6",
+    "@types/node": "^26.2.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react-swc": "^3.9.0",
+    "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
+    "happy-dom": "^20.11.6",
+    "tsx": "^4.23.12",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vitest": "^4.1.11"
   }
 }

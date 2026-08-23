@@ -1,13 +1,12 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import App from "./App.tsx";
+import { applySiteMeta } from "./lib/applySiteMeta";
+import { getDefaultCV, getSiteTheme } from "./lib/loadMarkdownCVs";
 
 import "./index.css";
 
-const theme = import.meta.env.VITE_CV_THEME;
-const pageTitle = import.meta.env.VITE_PAGE_TITLE || 'My CV';
-
-const loadThemeStyles = async () => {
+const loadThemeStyles = async (theme: ReturnType<typeof getSiteTheme>) => {
   switch (theme) {
     case "retro":
       await import("./themes/retro.css");
@@ -19,7 +18,7 @@ const loadThemeStyles = async () => {
     default:
       await Promise.all([
         import("github-markdown-css/github-markdown.css"),
-        import("./themes/github-markdown-override.css")
+        import("./themes/github-markdown-override.css"),
       ]);
       break;
   }
@@ -27,23 +26,31 @@ const loadThemeStyles = async () => {
 
 const init = async () => {
   try {
-    await loadThemeStyles();
-    document.title = pageTitle;
-    
-    // Update meta description
-    const metaDescription = document.querySelector('meta[name="description"]');
-    if (metaDescription) {
-      metaDescription.setAttribute('content', pageTitle);
+    const defaultCV = getDefaultCV();
+    const theme = getSiteTheme();
+
+    await loadThemeStyles(theme);
+
+    if (defaultCV) {
+      applySiteMeta(defaultCV);
     }
-    
+
     const root = createRoot(document.getElementById("root")!);
     root.render(
       <StrictMode>
         <App />
-      </StrictMode>
+      </StrictMode>,
     );
   } catch (error) {
-    console.error("Failed to load styles:", error);
+    console.error("Failed to initialize app:", error);
+    const root = document.getElementById("root");
+    if (root) {
+      const fallback = document.createElement("div");
+      fallback.className = "error-container";
+      fallback.textContent =
+        "Failed to initialize the app. Check the console for details.";
+      root.replaceChildren(fallback);
+    }
   }
 };
 

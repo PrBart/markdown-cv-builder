@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { LanguageNames } from "./consts";
-import { defaultLang, supportedLanguages } from "./lib/loadMarkdownCVs";
+import { cvByLang, defaultLang, supportedLanguages } from "./lib/loadMarkdownCVs";
 
 import "./LanguageSwitcher.css";
 
@@ -20,22 +19,22 @@ export default function LanguageSwitcher({ currentLang }: Props) {
     }
   };
 
-  // Ensure defaultLang is listed first
   const orderedLanguages = [
     defaultLang,
-    ...supportedLanguages.filter((lang: string) => lang !== defaultLang),
+    ...supportedLanguages.filter((lang) => lang !== defaultLang),
   ];
 
   return (
     <div className="dropdown-container">
       <select
         className="fancy-dropdown"
+        aria-label="Language"
         value={currentLang}
         onChange={handleLanguageChange}
       >
         {orderedLanguages.map((lang) => (
           <option key={lang} value={lang}>
-            {LanguageNames[lang as keyof typeof LanguageNames] ?? lang}
+            {cvByLang[lang]?.label ?? lang}
           </option>
         ))}
       </select>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#0d1117"/>
+  <rect x="80" y="80" width="1040" height="470" rx="24" fill="#161b22" stroke="#30363d" stroke-width="2"/>
+  <text x="120" y="200" font-family="system-ui, sans-serif" font-size="64" font-weight="700" fill="#f0f6fc">John Doe</text>
+  <text x="120" y="270" font-family="system-ui, sans-serif" font-size="36" fill="#8b949e">Senior Software Engineer</text>
+  <text x="120" y="460" font-family="system-ui, sans-serif" font-size="28" fill="#58a6ff">markdown-cv-builder</text>
+</svg>

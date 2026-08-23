@@ -1,3 +1,12 @@
+---
+$schema: ../config/cv.frontmatter.schema.json
+lang: de
+label: Deutsch
+title: Max Mustermann — Lebenslauf
+description: Senior Software Engineer mit über 8 Jahren Erfahrung in Full-Stack-Entwicklung und Cloud-Architektur.
+printLabel: Drucken / PDF speichern
+---
+
 # Max Mustermann
 ## Senior Software Engineer
 

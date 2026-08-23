@@ -1,33 +1,37 @@
+import { buildCVIndex, parseCVFile } from "./cvParse";
+import type { CVDocument, CVTheme } from "../types/cv";
+
 const files = import.meta.glob("../../markdown-source/*.md", {
-    eager: true,
-    query: "?raw",
-    import: "default",
-  });
-  
-  const markdownByLang: Record<string, string> = {};
-  let defaultLang = "en";
-  
-  for (const path in files) {
-    const defaultMatch = path.match(/cv\.default\.(\w+)\.md$/);
-    const regularMatch = path.match(/cv\.(\w+)\.md$/);
-  
-    if (defaultMatch) {
-      const lang = defaultMatch[1];
-      defaultLang = lang;
-      markdownByLang[lang] = files[path] as string;
-    } else if (regularMatch) {
-      const lang = regularMatch[1];
-      markdownByLang[lang] = files[path] as string;
+  eager: true,
+  query: "?raw",
+  import: "default",
+});
+
+const documents = Object.entries(files)
+  .map(([path, raw]) => {
+    const document = parseCVFile(path, raw as string);
+    if (!document) {
+      console.warn(
+        `[markdown-cv-builder] Skipped ${path}: invalid frontmatter or missing language`,
+      );
     }
-  }
-  
-  /**
-   * Get markdown content for a specific language.
-   * Falls back to the default language if unavailable.
-   */
-  export function getMarkdown(lang: string): string {
-    return markdownByLang[lang] || markdownByLang[defaultLang] || "CV not found";
-  }
-  
-  export const supportedLanguages = Object.keys(markdownByLang);
-  export { defaultLang };
+    return document;
+  })
+  .filter((document): document is CVDocument => document !== null);
+
+const { cvByLang, defaultLang } = buildCVIndex(documents);
+
+export function getCV(lang: string): CVDocument | undefined {
+  return cvByLang[lang] ?? cvByLang[defaultLang];
+}
+
+export function getDefaultCV(): CVDocument | undefined {
+  return cvByLang[defaultLang];
+}
+
+export function getSiteTheme(): CVTheme {
+  return getDefaultCV()?.theme ?? "github";
+}
+
+export const supportedLanguages = Object.keys(cvByLang);
+export { defaultLang, cvByLang };
