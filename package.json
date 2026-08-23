@@ -25,7 +25,7 @@
   "dependencies": {
     "github-markdown-css": "^5.8.1",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react-dom": "^19.2.8",
     "react-markdown": "^10.1.0",
     "react-router-dom": "^7.5.3",
     "remark-gfm": "^4.0.1",
@@ -39,7 +39,7 @@
     "@testing-library/user-event": "^14.6.6",
     "@types/node": "^26.2.0",
     "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
+    "@types/react-dom": "^19.2.4",
     "@vitejs/plugin-react-swc": "^3.9.0",
     "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.25.0",
