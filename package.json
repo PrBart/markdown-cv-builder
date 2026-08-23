@@ -44,7 +44,7 @@
     "@vitest/coverage-v8": "^4.1.11",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
-    "eslint-plugin-react-refresh": "^0.4.19",
+    "eslint-plugin-react-refresh": "^0.5.4",
     "globals": "^16.0.0",
     "happy-dom": "^20.11.6",
     "tsx": "^4.23.12",
